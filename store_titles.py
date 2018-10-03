@@ -2,9 +2,9 @@
 from google_result import search
 from bs4 import BeautifulSoup
 import urllib2
-import pandas as pd 
+import pandas as pd
 
-webpages = search("How to learn python", 1)
+webpages = search("How to learn python", 4)
 
 titles = []
 
