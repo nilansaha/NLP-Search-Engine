@@ -19,7 +19,7 @@ def edit_percentage(text1, text2):
 
 def preprocess(text):
     text = str(text)
-    text = text.translate(None, string.punctuation)
+    text = text.translate(str.maketrans("", "", string.punctuation))
     text = text.lower()
     text = word_tokenize(text)
     new_text = []
@@ -35,7 +35,7 @@ def cosine_similarity(title, query):
     tfidf = vectorizer.fit_transform([title.lower(),query.lower()])
     return ((tfidf * tfidf.T).A)[0,1]
 
-with open('index.pickle','r') as f:
+with open('index.pickle','rb') as f:
     index = pickle.load(f)
 
 def get_suggestions(text):
@@ -61,7 +61,7 @@ def process_query(query):
             suggestion = get_suggestions(token)
             craft_token.append(suggestion)
     if (suggestion_required == 1):
-        suggestion_answer = raw_input("Did you mean '" + " ".join(craft_token) + "' ? ")
+        suggestion_answer = input("Did you mean '" + " ".join(craft_token) + "' ? ")
         if suggestion_answer == 'Yes':
             process_query(" ".join(craft_token))
         else:
@@ -75,9 +75,9 @@ def get_results(query, bigarray):
     frame['actual'] = df.loc[documents].Titles.reset_index(drop=True)
     frame['processed'] = df.loc[documents].processed.reset_index(drop=True)
     frame['cosine_similarity'] = frame.processed.apply(lambda x: cosine_similarity(x, " ".join(query)))
-    print frame.sort_values(by=['cosine_similarity'], ascending = [False])['actual'].reset_index(drop=True)
+    print(frame.sort_values(by=['cosine_similarity'], ascending = [False])['actual'].reset_index(drop=True))
 
-query = raw_input("Enter you search query? ")
+query = input("Enter you search query? ")
 process_query(query)
 
 

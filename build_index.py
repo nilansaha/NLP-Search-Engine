@@ -20,7 +20,7 @@ df = pd.read_csv('titles.csv')
 df['processed'] = ""
 
 def preprocess(text):
-    text = text.translate(None, string.punctuation)
+    text = text.translate(str.maketrans('','', string.punctuation))
     text = text.lower()
     text = word_tokenize(text)
     new_text = []
