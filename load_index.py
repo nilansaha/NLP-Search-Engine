@@ -1,6 +1,6 @@
 import pickle
 import pandas as pd
-pd.set_option('display.expand_frame_repr', False)
+pd.set_option('display.max_colwidth', -1)
 from nltk import word_tokenize
 import string
 import pickle
